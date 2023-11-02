@@ -26,9 +26,11 @@
             <p class="text-muted">{% now "jS F Y" %}</p>
             <div class="col-md-7 col-lg-7" style="height: 450px; overflow: scroll;">
                 <!-- List of all the tasks for the day -->
+                {% for task in tasks  %}
+                
                 <div class="card m-1">
                     <div class="card-body">
-                        This is some Task
+                        {{ task.task }}
                         <span style="position: relative; float: right;">
                             <a class="btn btn-success"><i class="fa fa-check"></i> Mark as Done</a>
                             <a class="btn btn-danger"><i class="fa fa-trash"></i></a>
@@ -36,6 +38,7 @@
                         </span>
                     </div>
                 </div>
+                {% endfor %}
                
             </div>
             <div class="col-md-5 col-lg-5">
@@ -51,11 +54,12 @@
         <div class="row">
             <div class="col-md-6 col-lg-6 p-0" style="position: absolute; bottom: 50px;">
                 <!-- To Do Form -->
-                <form action="" >
+                <form action="{% url "addTask" %}" method='POST' >
+                    {% csrf_token %}
                     <div class="form-group">
                         <span style="display: flex;">
-                            <input type="text" class="form-control" placeholder="Add a task">
-                            <button class="btn btn-primary" style="width: 200px;"><i class="fa fa-plus"></i> Add</button>
+                            <input type="text" name='task' class="form-control" placeholder="Add a task">
+                            <button type='submit' class="btn btn-primary" style="width: 200px;"><i class="fa fa-plus"></i> Add</button>
                         </span>
                     </div>
                 </form>
