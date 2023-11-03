@@ -26,15 +26,15 @@
             <p class="text-muted">{% now "jS F Y" %}</p>
             <div class="col-md-7 col-lg-7" style="height: 450px; overflow: scroll;">
                 <!-- List of all the tasks for the day -->
-                {% for task in tasks  %}
+                {% for itask in tasks  %}
                 
                 <div class="card m-1">
                     <div class="card-body">
-                        {{ task.task }}
+                        {{ itask.task }} (PK = {{itask.pk}})
                         <span style="position: relative; float: right;">
-                            <a class="btn btn-success"><i class="fa fa-check"></i> Mark as Done</a>
-                            <a class="btn btn-danger"><i class="fa fa-trash"></i></a>
-                            <a class="btn btn-primary"><i class="fa fa-pencil"></i></a>
+                            <a href='{% url "mark_as_done" itask.pk %}' class="btn btn-success"><i class="fa fa-check"></i> Mark as Done</a>
+                            <a href='{% url "delete_task" itask.pk %}' class="btn btn-danger"><i class="fa fa-trash"></i></a>
+                            <a href="{% url "edit_task" itask.pk %}" class="btn btn-primary"><i class="fa fa-pencil"></i></a>
                         </span>
                     </div>
                 </div>
@@ -44,11 +44,16 @@
             <div class="col-md-5 col-lg-5">
                 <h5>Completed Tasks</h5>
                 <!-- List of all the tasks that have completed -->
+                {% for itask in completed_tasks  %}
                 <div class="card m-1">
                     <div class="card-body">
-                        This is the completed task.
+                        {{ itask.task }} (PK = {{itask.pk}})
                     </div>
+                    <span style='position: relative; float: right;'>
+                        <a href="{% url "mark_as_undone" itask.pk %}" class="btn btn-danger"><i class="fa fa-time">Mark as undone</i></a>
+                    </span>
                 </div>
+                {% endfor %}
             </div>
         </div>
         <div class="row">
